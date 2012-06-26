@@ -1103,7 +1103,11 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         Util.setRotationParameter(mParameters, mCameraId, mOrientation);
         Location loc = mLocationManager.getCurrentLocation();
         Util.setGpsParameters(mParameters, loc);
-        mCameraDevice.setParameters(mParameters);
+        try {
+            mCameraDevice.setParameters(mParameters);
+        } catch(Exception e){ 
+            // Dead zone
+        }
 
         // Restart the preview
         if (getResources().getBoolean(R.bool.restartPreviewBeforeTakePicture)) {
@@ -2056,7 +2060,11 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         mZoomState = ZOOM_STOPPED;
         setCameraState(IDLE);
         mFocusManager.onPreviewStarted();
-        mCameraDevice.setParameters(mParameters);
+        try {
+            mCameraDevice.setParameters(mParameters);
+        } catch(Exception e){ 
+            // Dead zone
+        }
 
         if (mSnapshotOnIdle) {
             mHandler.post(mDoSnapRunnable);
@@ -2174,7 +2182,11 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
 
             // Zoom related settings will be changed for different preview
             // sizes, so set and read the parameters to get lastest values
-            mCameraDevice.setParameters(mParameters);
+            try {
+                mCameraDevice.setParameters(mParameters);
+            } catch(Exception e){ 
+                // Dead zone
+            }
             mParameters = mCameraDevice.getParameters();
         }
         Log.v(TAG, "Preview size is " + optimalSize.width + "x" + optimalSize.height);
@@ -2187,7 +2199,12 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         if (isSupported(mSceneMode, mParameters.getSupportedSceneModes())) {
             if (!mParameters.getSceneMode().equals(mSceneMode)) {
                 mParameters.setSceneMode(mSceneMode);
-                mCameraDevice.setParameters(mParameters);
+                
+                try {
+                    mCameraDevice.setParameters(mParameters);
+                } catch(Exception e){ 
+                    // Dead zone
+                }
 
                 // Setting scene mode will change the settings of flash mode,
                 // white balance, and focus mode. Here we read back the
@@ -2285,7 +2302,11 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         }
 
         CameraSettings.dumpParameters(mParameters);
-        mCameraDevice.setParameters(mParameters);
+        try {
+            mCameraDevice.setParameters(mParameters);
+        } catch(Exception e){ 
+            // Dead zone
+        }
 
         if (getResources().getBoolean(R.bool.restartPreviewOnPictureSizeChange)) {
             // Start the preview again, in case we stopped it before
