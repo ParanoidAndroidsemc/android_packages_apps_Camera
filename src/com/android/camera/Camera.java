@@ -2103,6 +2103,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         }
 
         if (mSnapshotOnIdle) {
+            mSnapshotOnIdle = false;
             mHandler.post(mDoSnapRunnable);
         }
     }
